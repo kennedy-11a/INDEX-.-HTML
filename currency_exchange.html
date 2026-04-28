@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>HJ Company</title>
+<style>
+  body{font-family:Arial,sans-serif;background:#f0f2f5;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0}
+  .app{width:600px;border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+  .hdr{background:#1a1f5e;color:#fff;text-align:center;padding:28px}
+  .hdr h1{letter-spacing:2px;margin-bottom:6px}
+  .hdr p{font-size:12px;letter-spacing:3px;opacity:.8}
+  .body{background:#fff;padding:32px}
+  .row{display:flex;gap:16px;margin-bottom:24px}
+  .row div{flex:1}
+  label{font-size:13px;color:#777777;display:block;margin-bottom:5px}
+  input,select{width:100%;padding:9px 12px;border:1px solid #ccc;border-radius:7px;font-size:15px;box-sizing:border-box}
+  button{background:#1a1f5e;color:#fff;border:none;padding:10px 28px;border-radius:7px;font-size:14px;cursor:pointer}
+  button:hover{opacity:.85}
+  #result{font-size:28px;font-weight:700;color:#1a1f5e}
+  .rate{font-size:12px;color:#999;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="hdr">
+    <h1>HJ-COMPANY</h1>
+    <p>CURRENCY EXCHANGE PLATFORM</p>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div><label>Amount</label><input type="number" id="amt" value=""/></div>
+      <div><label>From</label><select id="from"></select></div>
+      <div><label>To</label><select id="to"></select></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:32px">
+      <button onclick="go()">Convert</button>
+      <div>
+        <label>Result</label>
+        <div id="result">—</div>
+        <div class="rate" id="rate"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const R={USD:1,RWF:1330,EUR:.92,GBP:.79,KES:129,UGX:3720,ZAR:18.6,JPY:149};
+  const L={USD:"USD – $",RWF:"Rwanda – RWF",EUR:"EUR – €",GBP:"GBP – £",KES:"KES – Ksh",UGX:"UGX – USh",ZAR:"ZAR – R",JPY:"JPY – ¥"};
+  const f=document.getElementById("from"),t=document.getElementById("to");
+  Object.keys(R).forEach(c=>{f.add(new Option(L[c],c));t.add(new Option(L[c],c))});
+  f.value="USD"; t.value="RWF";
+  function go(){
+    const a=+document.getElementById("amt").value, fr=f.value, to=t.value;
+    const v=(a/R[fr])*R[to];
+    document.getElementById("result").textContent=v.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+    document.getElementById("rate").textContent=`1 ${fr} = ${(R[to]/R[fr]).toFixed(4)} ${to}`;
+  }
+  go();
+</script>
+</body>
+</html>
